@@ -1,0 +1,19 @@
+{
+  "name": "project2",
+  "version": "1.0.0",
+  "description": "project2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BUEC500C1/news-analyzer-wq-yang.git"
+  },
+  "author": "wqyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BUEC500C1/news-analyzer-wq-yang/issues"
+  },
+  "homepage": "https://github.com/BUEC500C1/news-analyzer-wq-yang#readme"
+}
