@@ -4,7 +4,7 @@
   "description": "project2",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/BUEC500C1/news-analyzer-wq-yang/issues"
   },
-  "homepage": "https://github.com/BUEC500C1/news-analyzer-wq-yang#readme"
+  "homepage": "https://github.com/BUEC500C1/news-analyzer-wq-yang#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "mocha": "^8.3.0"
+  }
 }
