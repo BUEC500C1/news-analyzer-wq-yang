@@ -56,7 +56,7 @@ Entity-based, because it only needs few operations.
 
 RESTful API
 
-- upload a file: POST /file?uid=USER_ID
+- upload a file: POST /file
 - get file info: GET /file/TOKEN
 - get file content: GET /file/TOKEN/content
 - update file content: PUT /file/TOKEN/content
