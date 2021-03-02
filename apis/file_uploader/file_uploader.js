@@ -1,14 +1,21 @@
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, `storage/${req.params.username}`);
+    }
+});
+const upload = multer({storage: storage});
 
 module.exports = app => {
-
     // upload a file: POST /file/$username
-    app.post('/file/:username', (req, res) => {
-        // TODO: file uploading module
+    app.post('/file/:username', upload.single('upload'), (req, res) => {
+        
         res.send(`${req.params.username} successfully uploaded a file`);
         console.log('upload successfully!');
+        // TODO: Store data info to database
     });
 
-    // get info of a uploaded file: GET /file/$TOKEN
+    // get info of an uploaded file: GET /file/$TOKEN
     app.get('/file/:token', (req, res) => {
         // TODO: get data from database
         info = {
@@ -41,6 +48,7 @@ module.exports = app => {
 
 
 // client side
+
 // export const upload = async function(USER_ID, DATA) {
 //     await axios.post(`/file?uid=USER${USER_ID}`,DATA)
 //         .catch(err => {
