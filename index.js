@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-path.join
+
 // file upload api
 require('./apis/file_uploader/file_uploader')(app);
 

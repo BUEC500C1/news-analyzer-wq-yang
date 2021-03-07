@@ -1,18 +1,38 @@
+const aws = require('aws-sdk');
+const fs = require('fs');
+const keys = require('../../config/keys');
 const multer = require('multer');
+
+const s3 = new aws.S3({
+    accessKeyId: keys['AWS-ID'],
+    secretAccessKey: keys['AWS-KEY'],
+    region: 'us-east-1'
+})
+
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: (req, file, cb) => {
         cb(null, `storage/${req.params.username}`);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
     }
 });
 const upload = multer({storage: storage});
 
-module.exports = app => {
-    // upload a file: POST /file/$username
+module.exports = app => { // add file-upload-related apis to our app
+    /** upload a file: POST /file/$username
+     * use multer to upload, store file to aws s3
+     * */ 
     app.post('/file/:username', upload.single('upload'), (req, res) => {
-        
-        res.send(`${req.params.username} successfully uploaded a file`);
-        console.log('upload successfully!');
-        // TODO: Store data info to database
+        const params = {
+            Bucket: keys['BUCKET-NAME'],
+            Key: req.file.originalname,
+            Body: fs.createReadStream(req.file.path)
+        };
+        s3.upload(params, (err, data) => {
+            console.log(err, data);
+            // TODO: Store data info to database
+        });
     });
 
     // get info of an uploaded file: GET /file/$TOKEN
