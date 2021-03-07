@@ -33,6 +33,7 @@ module.exports = app => { // add file-upload-related apis to our app
             console.log(err, data);
             // TODO: Store data info to database
         });
+        res.send('upload seccessfully');
     });
 
     // get info of an uploaded file: GET /file/$TOKEN
