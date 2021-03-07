@@ -10,8 +10,11 @@ temporary AWS page: http://wqyang-ec500-project2.us-east-1.elasticbeanstalk.com
 - update file content: PUT /file/TOKEN/content
 - delete file: DELETE /file/TOKEN
 
+## Features
+- support uploading files, storing files in S3 storage
+- 
+
 ## TODO
-- store file in S3 storage (currently stores in local device)
 - add database to store file basic info
 - file ingester, add more info to db
 - login module

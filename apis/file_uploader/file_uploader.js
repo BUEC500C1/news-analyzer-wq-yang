@@ -9,17 +9,8 @@ const s3 = new aws.S3({
     region: 'us-east-1'
 });
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, `storage/${req.params.username}`);
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// });
-// const upload = multer({storage: storage});
-
-module.exports = app => { // add file-upload-related apis to our app
+// add file-upload-related apis to our app
+module.exports = app => {
     /** upload a file: POST /file/$username
      * use multer to upload, store file to aws s3
      * */ 

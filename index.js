@@ -1,9 +1,14 @@
 const express = require('express');
+const keys = require('./config/keys');
+const mongoose = require('mongoose');
 const path = require('path');
+
 const app = express();
 
 // file upload api
 require('./apis/file_uploader/file_uploader')(app);
+
+mongoose.connect(keys['MONGO-URI']);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>console.log(`express listening at ${PORT}`));
