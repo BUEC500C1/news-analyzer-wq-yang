@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 
 // file upload api
-require('./apis/file_uploader/file_uploader')(app);
+// require('./apis/file_uploader/file_uploader')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>console.log(`express listening at ${PORT}`));
