@@ -7,29 +7,29 @@ const s3 = new aws.S3({
     accessKeyId: keys['AWS-ID'],
     secretAccessKey: keys['AWS-KEY'],
     region: 'us-east-1'
-})
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, `storage/${req.params.username}`);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
 });
-const upload = multer({storage: storage});
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, `storage/${req.params.username}`);
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+// const upload = multer({storage: storage});
 
 module.exports = app => { // add file-upload-related apis to our app
     /** upload a file: POST /file/$username
      * use multer to upload, store file to aws s3
      * */ 
-    app.post('/file/:username', upload.single('upload'), (req, res) => {
-        const params = {
+    app.post('/file/:username', multer({dest: 'temp/'}).single('upload'), (req, res) => {
+        const uploadParams = {
             Bucket: keys['BUCKET-NAME'],
-            Key: req.file.originalname,
+            Key: `storage/${req.params.username}/${req.file.originalname}`,
             Body: fs.createReadStream(req.file.path)
         };
-        s3.upload(params, (err, data) => {
+        s3.upload(uploadParams, (err, data) => {
             console.log(err, data);
             // TODO: Store data info to database
         });
