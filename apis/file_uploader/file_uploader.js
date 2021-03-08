@@ -1,7 +1,12 @@
 const aws = require('aws-sdk');
 const fs = require('fs');
+const ingest = require('./ingest');
 const keys = require('../../config/keys');
+const mongoose = require('mongoose');
 const multer = require('multer');
+
+const File = mongoose.model('File');
+const User = mongoose.model('User');
 
 const s3 = new aws.S3({
     accessKeyId: keys['AWS-ID'],
@@ -13,18 +18,37 @@ const s3 = new aws.S3({
 module.exports = app => {
     /** upload a file: POST /file/$username
      * use multer to upload, store file to aws s3
-     * */ 
+     * */
     app.post('/file/:username', multer({dest: 'temp/'}).single('upload'), (req, res) => {
+        const username = req.params.username;
+        const {originalname, mimetype} = req.file;
+
         const uploadParams = {
             Bucket: keys['BUCKET-NAME'],
-            Key: `storage/${req.params.username}/${req.file.originalname}`,
+            Key: `storage/${username}/${originalname}`,
             Body: fs.createReadStream(req.file.path)
         };
-        s3.upload(uploadParams, (err, data) => {
-            console.log(err, data);
-            // TODO: Store data info to database
+        s3.upload(uploadParams, async (err, data) => {
+            if (err) {
+                console.log('Error', err);
+                return;
+            }
+            if (data) {
+                const user = await User.findOne({ username });
+                const file = new File({
+                    _user: user._id,
+                    filename: originalname,
+                    type: mimetype,
+                    location: data.Location,
+                    uploadTime: Date.now()
+                });
+                await file.save();
+                user.files.push(file._id);
+                await user.save();
+                res.send('upload seccessfully');
+                ingest(data.Location);
+            }
         });
-        res.send('upload seccessfully');
     });
 
     // get info of an uploaded file: GET /file/$TOKEN
@@ -32,7 +56,7 @@ module.exports = app => {
         // TODO: get data from database
         info = {
             token: req.params.token,
-            'user_id': 3223, // who owns this file
+            'username': 3223, // who owns this file
             'privilege_users':{
                 'read': [3333, 4324],
                 'full': [3223],  // complete permission

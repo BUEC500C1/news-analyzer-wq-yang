@@ -25,15 +25,12 @@ Entity-based, because it only needs few operations.
    ```json
    {
      '_id': ID, // identification of a file
-     'token': TOKEN, // encrypted from id, prevent user from enumerating file id
      'user_id': USER_ID, // who owns this file
-     'privilege_users':{
-       'read': [USER_ID_1, USER_ID_2, ...,],
-       'full': [USER_ID_1, USER_ID_2, ...,],  // complete permission
-     },
      'filename': FILENAME,
      'filetype': FILETYPE,
      'language': LANGUAGE,
+     'content': CONTENT,
+     'location': LOCATION,
      'uploadTime': UPLOAD_TIME,
      'createTime': CREATE_TIME,
      'entities': [ENTITY_1, ENTITY_2, ...,],
@@ -45,7 +42,8 @@ Entity-based, because it only needs few operations.
 
    ```json
    {
-     'id': USRT_ID,
+     'id': USER_ID,
+     'userName': 
      'files': [TOKEN_1, TOKEN_2, ...]
    }
    ```
