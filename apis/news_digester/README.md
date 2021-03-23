@@ -1,13 +1,10 @@
-
-
 # News Feed Ingester
+use NYT news API
 
 ## 1. User Stories
 
-- API user should be able to subscribe to specific topics, e.g. technology, politics, etc.
-- API users should be able to subscribe to specific news providers, e.g. npr, Boston Globe, etc.
-- API users should be able to get stream of news that they subscribe to, so that they can get inspiration for their investigation/report.
 - API users should be able to search keyword to enhance story.
+- API users should be able to analyze entites of the news.
 
 ## 2. Procedure-based or Entity-based
 
@@ -16,19 +13,18 @@ Procedure-based.
 ## 3. Operations, Data, and Status
 
 ### Operations
-
-- subscribe(type='topic', name)
-- getStream()
-- searchKeyword(keyword)
+- search: GET '/news:keyword'
+  - entity analyze: automatically call nlp api, analyze entity of article abstract
+  - store to database for "local" search automatically
 
 ### Data
 
 news
 
-```json
+```javascript
 {
-  'agent': AGENT,
-  'entity': [KEY1, KEY2, ...,],  // name, location, other kind of keyword
+  title: ,
+  entity: [KEY1, KEY2, ...,],  // name, location, other kind of keyword
 }
 ```
 

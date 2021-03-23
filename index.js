@@ -9,8 +9,9 @@ require('./models/Entity');
 mongoose.connect(keys['MONGO-URI']);
 
 const app = express();
-// file upload api
+// enable apis to our backend
 require('./apis/file_uploader/file_uploader')(app);
+require('./apis/news_digester/news_api')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>console.log(`express listening at ${PORT}`));
