@@ -22,3 +22,31 @@ temporary AWS page: http://wqyang-ec500-project2.us-east-1.elasticbeanstalk.com
         - example: http://wqyang-ec500-project2.us-east-1.elasticbeanstalk.com/news/election
 - analyze entity for article/pdf
     - automatically analyze entity for article/pdf, shows result in console. (todo: store result to MongoDB)
+
+## Screenshots
+
+- nlp analysis only shows in local terminal console currently
+
+  e.g. automatic news analysis
+
+  ![news_nlp](./imgs/news_nlp.png)
+
+- store file metadata to MongoDB
+
+  ![db_file](./imgs/db_file.png)
+
+- store user metadata to MongoDB
+
+  ![db_file](./imgs/db_user.png)
+
+- file stores in S3
+
+  e.g. for user `test_user`, file was stored in `storage/test_user/`
+
+  ![file_storage](./imgs/file_storage.png)
+
+- news
+
+  e.g. search for covid using REST API
+
+  ![news](./imgs/news.png)
